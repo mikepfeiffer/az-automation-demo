@@ -11,6 +11,7 @@ This repository contains production-ready PowerShell runbook examples demonstrat
   - [Demo #1: Intelligent VM Sizing](#demo-1-intelligent-vm-sizing)
   - [Demo #2: Orphaned Resource Governance](#demo-2-orphaned-resource-governance)
   - [Demo #3: Pre-Change Safety Automation](#demo-3-pre-change-safety-automation)
+- [GitHub Actions Integration Example](#github-actions-integration-example)
 - [Prerequisites](#prerequisites)
 - [Setup Instructions](#setup-instructions)
 - [Disclaimer](#disclaimer)
@@ -480,6 +481,55 @@ Set-AzVMOSDisk -VM $vm -ManagedDiskId $disk.Id -Name $disk.Name
 # 5. Start the VM
 Start-AzVM -ResourceGroupName "prod-rg" -Name "webserver-01"
 ```
+
+---
+
+## GitHub Actions Integration Example
+
+This repository includes a complete **GitHub Actions workflow** (`.github/workflows/deploy-iis-webapp.yml`) that demonstrates how to integrate the Pre-Change Snapshot runbook into a real-world CI/CD pipeline.
+
+### What's Included
+
+The workflow showcases a production-ready deployment pattern for an IIS web application:
+
+1. **Pre-Deployment Snapshot Job**
+   - Invokes the snapshot runbook via webhook before deployment
+   - Passes deployment metadata (Change ID, VM name, resource group)
+   - Waits for snapshot completion with timeout and status checking
+   - Fails the deployment if snapshot creation fails
+
+2. **Build Job**
+   - Runs in parallel with snapshot creation to save time
+   - Builds a fictitious .NET web application
+   - Creates deployment package
+
+3. **Deploy Job**
+   - Only runs if snapshot and build both succeed
+   - Simulates WebDeploy to IIS server
+   - Includes health check verification
+
+4. **Post-Deployment Validation**
+   - Runs smoke tests
+   - Sends notifications
+
+### Key Features
+
+- **Webhook Integration**: Shows how to call Azure Automation from CI/CD
+- **Status Polling**: Demonstrates waiting for job completion (60-120 seconds)
+- **Error Handling**: Proper failure modes and rollback protection
+- **Windows Runner**: Uses `windows-latest` for IIS deployment scenarios
+- **Production Patterns**: Includes manual triggers, DryRun options, and environment protection
+
+### Quick Start
+
+See **[WORKFLOW-SETUP.md](WORKFLOW-SETUP.md)** for complete instructions on:
+- Creating and configuring the webhook
+- Setting up GitHub secrets
+- Customizing for your application
+- Troubleshooting common issues
+- Implementing rollback procedures
+
+This example can be adapted for other deployment scenarios (Azure App Service, VMs, containers) and demonstrates how to build safe, auditable deployment pipelines with automated rollback protection.
 
 ---
 
