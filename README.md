@@ -745,4 +745,16 @@ Before using any of these runbooks in production:
 
 ## License
 
-This repository is provided for educational purposes. Please ensure any use complies with your organization's policies and Microsoft's Azure terms of service.
+This repository is provided as **open-source example code** under the MIT License.
+
+The scripts are intended for **educational and demonstration purposes only**.  
+They are not production-hardened and may require additional validation, error handling, and security controls before use in live environments.
+
+By using this code, you acknowledge that:
+- You are responsible for reviewing, testing, and validating the scripts in your own environment
+- StormWind Studios and the author assume **no liability** for how the code is used or modified
+- Identity- and access-related scripts should be executed with care, especially in production tenants
+
+Always follow your organization’s security, compliance, and change-management practices when working with identity and access controls.
+
+[MIT License](https://github.com/mikepfeiffer/az-automation-demo/blob/main/LICENSE)
